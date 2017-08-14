@@ -1,0 +1,7 @@
+service executes elasticsearch queries. 
+usage:
+
+/<{{services|join("|")}}>/?query=<elasticsearch query>
+
+service accept GET and POST.
+configured elasticsearch server: {{base_url}}
