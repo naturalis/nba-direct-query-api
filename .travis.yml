@@ -4,6 +4,7 @@ services:
   - docker
 
 before_install:
+  - pwd
   - export DOCKER_TAG=$(git describe)
 
 script:
