@@ -15,14 +15,21 @@ except Exception as e:
 	print(e)
 	exit(1)
 
+try:
+	es_request_timeout = int(environ['ES_TIMEOUT'])
+except Exception as e:
+	es_request_timeout = 10
+
 base_url = 'http://' + ip + ':' + port
 services = ['taxon','specimen','multimedia','geo']
+
 
 @app.route('/')
 def root():
 	response = make_response(render_template('info.txt',services=services,base_url=base_url))
 	response.headers['content-type'] = 'text/plain'
 	return response
+
 
 @app.route('/<service>/', methods=['GET','POST'])
 def query(service):
@@ -37,10 +44,14 @@ def query(service):
 	if len(query.strip())==0:
 		return 'no query'
 
-	r = requests.post(base_url+'/'+service+'/_search',data=query)
-	response = make_response(r.content)
-	response.headers['content-type'] = 'application/json; charset=utf-8'
-	return response	
+	try:
+		r = requests.post(base_url+'/'+service+'/_search',data=query,timeout=es_request_timeout)
+		response = make_response(r.content)
+		response.headers['content-type'] = 'application/json; charset=utf-8'
+		return response	
+	except Exception as e:
+		return 'request error: ' + str(e)
 
+		
 if __name__ == "__main__":
 	app.run(host="0.0.0.0")
