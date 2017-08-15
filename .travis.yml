@@ -5,7 +5,7 @@ services:
 
 before_install:
   - pwd
-  - export DOCKER_TAG=$(git describe)
+  - export DOCKER_TAG=latest
 
 script:
   - docker build -t naturalis/nba-direct-query-api:$DOCKER_TAG ./
