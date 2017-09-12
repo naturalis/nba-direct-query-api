@@ -23,13 +23,11 @@ except Exception as e:
 base_url = 'http://' + ip + ':' + port
 services = ['taxon','specimen','multimedia','geo']
 
-
 @app.route('/')
 def root():
 	response = make_response(render_template('info.txt',services=services,base_url=base_url))
 	response.headers['content-type'] = 'text/plain'
 	return response
-
 
 @app.route('/<service>/', methods=['GET','POST'])
 def query(service):
@@ -43,7 +41,7 @@ def query(service):
 
 	if len(query.strip())==0:
 		return 'no query'
-
+		
 	try:
 		r = requests.post(base_url+'/'+service+'/_search',data=query,timeout=es_request_timeout)
 		response = make_response(r.content)
@@ -51,7 +49,6 @@ def query(service):
 		return response	
 	except Exception as e:
 		return 'request error: ' + str(e)
-
 		
 if __name__ == "__main__":
 	app.run(host="0.0.0.0")
