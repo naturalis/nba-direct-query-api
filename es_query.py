@@ -21,7 +21,7 @@ except Exception as e:
 	es_request_timeout = 10
 
 base_url = 'http://' + ip + ':' + port
-services = ['taxon','specimen','multimedia','geo']
+services = ['taxon','specimen','multimedia','geo','storageunits']
 
 @app.route('/')
 def root():
