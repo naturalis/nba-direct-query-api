@@ -11,7 +11,7 @@ script:
   - docker build -t naturalis/nba-direct-query-api:$DOCKER_TAG ./
 
 after_success:
-  - docker login -u naturalis -p $DOCKER_PASS
+  - docker login -u maartenschermer -p $DOCKER_PASS
   - docker tag naturalis/nba-direct-query-api:$DOCKER_TAG naturalis/nba-direct-query-api:$DOCKER_TAG
   - docker push naturalis/nba-direct-query-api:$DOCKER_TAG
   - docker logout
